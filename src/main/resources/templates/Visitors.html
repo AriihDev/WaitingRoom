@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="main-template">
+<head>
+<meta charset="ISO-8859-1">
+<title>Liste des Visitors</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+	<section layout:fragment="mainContent">
+		<div class="container mt-4">
+			<div class="card mb-3">
+				<div class="card-body">
+					<form method="get" th:action="@{/visitors/}">
+						<div class="row g-3 align-items-center">
+							<div class="col-auto">
+								<label for="input-fname" class="col-form-label sm">Nom</label>
+							</div>
+							<div class="col-auto">
+								<input type="text" id="input-fname" name="fname"
+									th:value="${fname}" class="form-control form-control-sm">
+							</div>
+							<div class="col-auto">
+								<label for="input-lname" class="col-form-label sm">Prenom</label>
+							</div>
+							<div class="col-auto">
+								<input type="text" id="input-lname" name="lname"
+									th:value="${lname}" class="form-control form-control-sm">
+							</div>
+							<div class="col-auto">
+								<button id="input-lname" class="btn btn-sm btn-success">
+									Chercher</button>
+							</div>
+							<div class="col-auto">
+								<a th:href="@{/visitors/}" class="btn btn-sm btn-warning">Tout
+									voir </a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="card text-center">
+				<div class="card-header">Liste des visiteurs</div>
+				<div class="card-body">
+					<table class="table table-dark">
+						<thead>
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">Nom</th>
+								<th scope="col">Prenom</th>
+								<th scope="col">Date de naissance</th>
+								<th scope="col">Nationalite</th>
+								<th scope="col">Ancien</th>
+								<th scope="col">Supprimer</th>
+								<th scope="col">Update</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="visitor: ${visitors}">
+								<td th:text="${visitor.id}" />
+								<td th:text="${visitor.fname}" />
+								<td th:text="${visitor.lname}" />
+								<td th:text="${visitor.dob}" />
+								<td th:text="${visitor.nationality}" />
+								<td th:text="${visitor.oldVisitor} ? 'Oui' : 'Non'" />
+								<td><a th:href="@{/visitors/delete/(id=${visitor.id})}"
+									class="btn btn-danger btn-sm">Supprimer</a></td>
+								<td><a th:href="@{/visitors/edit/(id=${visitor.id})}"
+									id="delete-visitor" class="btn btn-warning btn-sm">MAJ</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+				<div class="card-footer text-muted">Pages</div>
+				<nav aria-label="...">
+					<ul class="pagination pagination-sm">
+						<li th:each="page, status: ${pages}" class="page-item"><a
+							th:href="@{/visitors/(page=${status.index},lname=${lname}, fname=${fname})}"
+							th:text="${status.index + 1}" class="page-link" tabindex="-1"></a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!-- <h1 style="text-align:center">Liste des visiteurs</h1>
+	<table class="table table-dark">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">First Name</th>
+				<th scope="col">Last Name</th>
+				<th scope="col">Date of Birthday</th>
+				<th scope="col">Nationality</th>
+				<th scope="col">Old Visitor</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="visitor: ${visitors}">
+				<td th:text="${visitor.id}" />
+				<td th:text="${visitor.fname}" />
+				<td th:text="${visitor.lname}" />
+				<td th:text="${visitor.dob}" />
+				<td th:text="${visitor.nationality}" />
+				<td th:text="${visitor.oldVisitor} ? 'Oui' : 'Non'" />
+			</tr>
+		</tbody>
+	</table>
+ -->
+	</section>
+</body>
+</html>
